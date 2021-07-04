@@ -1,0 +1,21 @@
+<div>
+    <h2>Create new Thread</h2>
+    <div>
+        <form action="/threads/create" method="POST">
+            {{#if errors}}
+                <ul>
+                    {{#each errors}}
+                        <li>{{this}}</li>
+                    {{/each}}
+                </ul>
+            {{/if}}
+            <div>
+                <label>name: </label>
+                <input type="text" name="name" value="{{name}}">
+            </div>
+            <div>
+                <input type="submit" value="Create thread">
+            </div>
+        </form>
+    </div>
+</div>

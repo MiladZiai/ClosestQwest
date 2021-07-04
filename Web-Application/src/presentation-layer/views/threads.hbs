@@ -1,0 +1,26 @@
+<div>
+	<h1>All Threads: </h1>
+	{{#if isLoggedIn}}
+        <form action="/threads/create" method="GET">
+            <input type="submit" value="Create Thread">
+        </form>
+	{{/if}}
+	{{#if errors}}
+		<ul>
+			{{#each errors}}
+			    <li>{{this}}</li>
+			{{/each}}
+		</ul>
+    {{else}}
+        {{#if threads}}
+            {{#each threads}}
+                <a href="/posts/{{threadId}}">
+                <div>
+                    <h3 name="name">{{threadName}}</h3>
+                </div>
+            {{/each}}
+        {{else}}
+        <p>No threads exist yet.</p>
+        {{/if}}
+    {{/if}}
+</div>

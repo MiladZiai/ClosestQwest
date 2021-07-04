@@ -1,0 +1,28 @@
+<div>
+	<h1>All posts of thread</h1>
+	{{#if isLoggedIn}}
+        <form action="/posts/create/{{threadId}}" method="GET">
+		    <input type="submit" value="Create a new post">
+	    </form>
+    {{/if}}
+	{{#if errors}}
+        <ul>
+            {{#each errors}}
+                <li>{{this}}</li>
+            {{/each}}
+        </ul>
+	{{else}}
+        {{#if posts}}
+            {{#each posts}}
+                <div style="background-color: #5B84B1FF; margin: 5px;">
+                    <div>
+                        <h3 style="color: #FC766AFF">{{postTitle}}</h3>
+                        <p style="color: #FC766AFF">{{postContent}}</p>
+                    </div>
+                </div>
+            {{/each}}
+        {{else}}
+            <p>No posts exist yet.</p>
+        {{/if}}
+	{{/if}}
+</div>

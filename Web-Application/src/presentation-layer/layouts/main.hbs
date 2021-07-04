@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ClosestQwest</title>
+    <link rel="stylesheet" href="/css/layout.css">
+</head>
+
+<nav>
+    <div>
+        <a href="/"><strong>ClosestQwest</strong></a>
+    </div>
+    <div>
+        <div>
+            <a href="/accounts">Accounts</a>
+            <a href="/threads">Threads</a>
+            <a href="/contact">Contact</a>
+            <a href="/about">About</a>
+        </div>
+        <div>
+            <div>
+                <div>
+                    {{#if isLoggedIn}}
+                        <form action="/accounts/logout" method="POST">
+                            <input type="submit" value="Logout">
+                        </form>
+                    {{else}}
+                        <a href="/accounts/sign-up">Sign up</a>
+                        <a href="/accounts/sign-in">Sign in</a>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<body>
+    {{{body}}}
+</body>
+
+</html>

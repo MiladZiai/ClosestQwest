@@ -1,0 +1,25 @@
+<div>
+	<h2>Sign up</h2>
+    <div>
+        <form action="/accounts/sign-up" method="POST">
+            {{#if errors}}
+                <ul>
+                    {{#each errors}}
+                        <li>{{this}}</li>
+                    {{/each}}
+                </ul>
+            {{/if}}
+            <div>
+                <label>Username:</label>
+                <input type="text" name="username" value="{{username}}">
+            </div>
+            <div class="field">
+                <label>Password:</label>
+                <input type="password" name="password" value="{{password}}">
+            </div>
+            <div>
+                <input type="submit" value="Create Account">
+            </div>
+        </form>
+    </div>
+</div>

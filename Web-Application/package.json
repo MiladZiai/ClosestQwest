@@ -1,0 +1,30 @@
+{
+  "name": "web-application",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --inspect=0.0.0.0 /web-application/src/main.js -L"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "awilix": "^4.3.4",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "connect-redis": "^6.0.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.2",
+    "express-session": "^1.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mysql": "^2.18.1",
+    "nginx": "^1.0.3",
+    "redis": "^3.1.2",
+    "sequelize": "^6.6.4",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.9"
+  }
+}
