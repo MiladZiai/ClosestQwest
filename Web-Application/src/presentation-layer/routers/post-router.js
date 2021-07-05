@@ -22,36 +22,46 @@ module.exports = function({ postManager }) {
 
     // Create post for club specified in param GET
     router.get("/create/:id", function(request, response) {
-        const model = {
-            threadId: request.params.id,
-            isLoggedIn: request.session.isLoggedIn
+        if(request.session.isLoggedIn) {
+            const model = {
+                threadId: request.params.id,
+                isLoggedIn: request.session.isLoggedIn
+            }
+            response.render("posts-create.hbs", model)
+        } else {
+            response.redirect("/accounts/sign-in")
         }
-        response.render("posts-create.hbs", model)
+        
     })
 
     // Create post for thread specified in params POST
     router.post("/create/:id", function(request, response) {
-        const post = {
-            title: request.body.title,
-            content: request.body.content,
-            postOnThread: request.params.id,
-            postOfAccount: request.session.account.accountId
+        if(request.session.isLoggedIn) {
+            const post = {
+                title: request.body.title,
+                content: request.body.content,
+                postOnThread: request.params.id,
+                postOfAccount: request.session.account.accountId
+            }
+            
+            postManager.createPost(post, function(errors) {
+                if (errors.length == 0) {
+                    response.redirect(`/posts/${request.params.id}`)
+                } else {
+                    const model = {
+                        errors: errors,
+                        threadId: request.params.id,
+                        title: request.body.title,
+                        content: request.body.content,
+                        isLoggedIn: request.session.isLoggedIn
+                    }
+                    response.render("posts-create.hbs", model)
+                }
+            })
+        } else {
+            response.redirect("/accounts/sign-in")
         }
         
-        postManager.createPost(post, function(errors) {
-            if (errors.length == 0) {
-                response.redirect(`/posts/${request.params.id}`)
-            } else {
-                const model = {
-                    errors: errors,
-                    postOnThread: request.params.id,
-                    title: request.body.title,
-                    content: request.body.content,
-                    isLoggedIn: request.session.isLoggedIn
-                }
-                response.render("posts-create.hbs", model)
-            }
-        })
     })
 
     return router
