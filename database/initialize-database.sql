@@ -8,6 +8,8 @@ CREATE TABLE IF NOT EXISTS account(
 CREATE TABLE IF NOT EXISTS thread(
     threadId INTEGER PRIMARY KEY AUTO_INCREMENT,
     threadName VARCHAR(50) NOT NULL,
+    threadOfAccount INTEGER NULL,
+    FOREIGN KEY (threadOfAccount) REFERENCES account(accountId),
     CONSTRAINT threadNameUnique UNIQUE (threadName)
 );
 

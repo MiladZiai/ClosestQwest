@@ -7,7 +7,6 @@ exports.getErrorsNewPost = function(post) {
     const maxContentLen = 500
 
     // Validate title.
-
     if (!(/\w+/).test(post.title)) {
         errors.push("Title Missing")
         return errors

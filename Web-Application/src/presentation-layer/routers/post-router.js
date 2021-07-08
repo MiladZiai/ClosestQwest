@@ -41,7 +41,7 @@ module.exports = function({ postManager }) {
                 title: request.body.title,
                 content: request.body.content,
                 postOnThread: request.params.id,
-                postOfAccount: request.session.account.accountId
+                postOfAccount: request.session.accountId
             }
             
             postManager.createPost(post, function(errors) {

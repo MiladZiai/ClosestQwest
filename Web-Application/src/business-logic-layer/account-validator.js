@@ -8,22 +8,22 @@ exports.getErrorsNewAccount = function(account) {
 
     // Validate username.
     if (!(/\w+/).test(account.username)) {
-        errors.push("usernameMissing")
+        errors.push("Username Missing")
         return errors
     } else if ((/[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/).test(account.username)) { //regex that does not allow special characters 
-        errors.push("usernameInvalidCharacters")
+        errors.push("Username Contains Invalid Characters")
         return errors
     } else if (account.username.length < minUsernameLen) {
-        errors.push("username Too Short")
+        errors.push("Username Too Short")
     } else if (maxUsernameLen < account.username.length) {
-        errors.push("username Too Long")
+        errors.push("Username Too Long")
     }
 
     // Validate password.
     if (!(/\w+/).test(account.password)) {
-        errors.push("password Missing")
+        errors.push("Password Missing")
     } else if (account.password.length < minPasswordLen || maxPasswordLen < account.password.length) {
-        errors.push("password Length Error")
+        errors.push("Password Too Short or Too Long")
     }
 
     return errors

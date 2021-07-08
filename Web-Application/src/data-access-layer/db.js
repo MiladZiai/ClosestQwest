@@ -4,7 +4,8 @@ const connection = mysql.createConnection({
 	host     : 'database',
 	user     : 'root',
 	password : 'theRootPassword',
-	database : 'webAppDatabase'
+	database : 'webAppDatabase',
+	multipleStatements: true
 	
 })
 

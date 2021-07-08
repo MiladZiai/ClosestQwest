@@ -1,5 +1,4 @@
 const express = require('express')
-//const errorMessages = require('../../business-logic-layer/error-messages')
 
 module.exports = function({ accountManager }) {
 
@@ -27,8 +26,9 @@ module.exports = function({ accountManager }) {
             password: request.body.password
         }
 
-        accountManager.createAccount(account, function(errors) {
+        accountManager.createAccount(account, function(errors, accountId) {
             if (errors.length == 0) {
+                request.session.accountId = accountId.insertId
                 request.session.isLoggedIn = true
                 response.render("home.hbs", { isLoggedIn: request.session.isLoggedIn })
             } else {
@@ -55,6 +55,7 @@ module.exports = function({ accountManager }) {
         accountManager.signInAccount(account, function(errors, account) {
             if (errors.length == 0) {
                 request.session.account = account
+                request.session.accountId = account.accountId
                 request.session.isLoggedIn = true
                 response.redirect("/")
             } else {

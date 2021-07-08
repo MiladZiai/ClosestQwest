@@ -1,12 +1,9 @@
-const db = require('./db')
-
-module.exports = function() {
+module.exports = function({ MySQLDb }) {
 
     exports.getAllAccounts = function(callback) {
-
         const query = `SELECT username FROM account ORDER BY username`
 
-        db.query(query, function(error, accounts) {
+        MySQLDb.query(query, function(error, accounts) {
             if (error) {
                 callback(['internalError'], null)
             } else {
@@ -17,19 +14,18 @@ module.exports = function() {
     }
 
     exports.createAccount = function(account, callback) {
-
-        const query = `INSERT INTO account (username, password) VALUES (?, ?)`
+        const query = `INSERT INTO account (username, password) VALUES (?, ?); SELECT LAST_INSERT_ID();`
         const values = [account.username, account.password]
 
-        db.query(query, values, function(error) {
-            callback(error)
+        MySQLDb.query(query, values, function(error, accountId) {
+            callback(error, accountId[0])
         })
     }
 
-    exports.signInAccount = function(account, callback) {
+    exports.getUsernameById = function(account, callback) {
         const query = `SELECT * FROM account WHERE username = ?`
 
-        db.query(query, account.username, function(error, accounts) {
+        MySQLDb.query(query, account.username, function(error, accounts) {
             if (error) {
                 callback(error, null)
             } else {

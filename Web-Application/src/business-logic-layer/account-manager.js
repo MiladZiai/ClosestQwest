@@ -1,6 +1,5 @@
 const accountValidator = require('./account-validator')
 const bcrypt = require('bcrypt')
-//const { saltRounds } = require('./commons')
 
 module.exports = function({ accountRepository }) {
 
@@ -25,16 +24,15 @@ module.exports = function({ accountRepository }) {
                     return
                 } else {
                     account.password = hash
-                    accountRepository.createAccount(account, function(error) {
+                    accountRepository.createAccount(account, function(error, accountId) {
                         if (error) {
                             if (error.sqlMessage.includes("usernameUnique")) {
-                                callback(['usernameTaken'])
+                                callback(['Username Taken'], null)
                             } else {
-                                console.log(error);
-                                callback(['Could not create account'])
+                                callback(['Could not create account'], null)
                             }
                         } else {
-                            callback([])
+                            callback([], accountId)
                         }
                     })
                 }
@@ -46,7 +44,7 @@ module.exports = function({ accountRepository }) {
 
         const errors = []
 
-        accountRepository.signInAccount(account, function(dbErrors, dbAccount) {
+        accountRepository.getUsernameById(account, function(dbErrors, dbAccount) {
             if (!dbAccount) {
                 errors.push("account Missing")
             } else if (dbErrors.length > 0) {
