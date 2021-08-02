@@ -10,7 +10,7 @@ module.exports = function({ accountManager }) {
             const model = {
                 errors: errors,
                 accounts: accounts,
-                isLoggedIn: request.session.account
+                isLoggedIn: request.session.isLoggedIn
             }
             response.render("accounts.hbs", model)
         })

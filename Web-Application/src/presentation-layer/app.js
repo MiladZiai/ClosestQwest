@@ -6,7 +6,14 @@ const redisClient = redis.createClient({ host: 'redis' })
 const redisStore = require('connect-redis')(expressSession)
 const path = require('path')
 
-module.exports = function({ variousRouter, accountRouter, threadRouter, postRouter }) {
+module.exports = function({ variousRouter, 
+                            accountRouter, 
+                            threadRouter, 
+                            postRouter, 
+                            accountRouterApi, 
+                            threadRouterApi,
+                            postRouterApi
+                        }) {
 
     const app = express()
 
@@ -17,15 +24,13 @@ module.exports = function({ variousRouter, accountRouter, threadRouter, postRout
 
     // Handle all static files in folder "public".
     app.use(express.static(path.join(__dirname, "/public")))
-    //app.use(express.static(path.join(__dirname, "../presentation-layer-api/frontend")))
+    app.use(express.static(path.join(__dirname, "../../../Single-Page-Application/frontend")))
 
     app.use(function(request, response, next) {
-
         response.setHeader("Access-Control-Allow-Origin", "*")
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
         response.setHeader("Access-Control-Allow-Headers", "*")
         response.setHeader("Access-Control-Expose-Headers", "*")
-
         next()
     })
 
@@ -35,7 +40,6 @@ module.exports = function({ variousRouter, accountRouter, threadRouter, postRout
         layoutsDir: path.join(__dirname, "/layouts")
     }))
 
-    
     app.use(expressSession({
         store: new redisStore({ client: redisClient }),
         secret: "keyboard dog",
@@ -43,15 +47,14 @@ module.exports = function({ variousRouter, accountRouter, threadRouter, postRout
         saveUninitialized: true
     }))
 
-
     // Attach all the routers.
     app.use("/", variousRouter)
     app.use("/accounts", accountRouter)
-    //app.use("/api/accounts", accountRouterApi)
+    app.use("/api/accounts", accountRouterApi)
     app.use("/threads", threadRouter)
-    //app.use("/api/clubs", threadRouterApi)
+    app.use("/api/threads", threadRouterApi)
     app.use("/posts", postRouter)
-    //app.use("/api/posts", postRouterApi)
+    app.use("/api/posts", postRouterApi)
 
     return app
 

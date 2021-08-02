@@ -31,6 +31,7 @@ module.exports = function({ threadManager }) {
         if(request.session.isLoggedIn) {
             const thread = {
                 name: request.body.name,
+                threadOfAccount: request.session.accountId
             }
     
             threadManager.createThread(thread, function(errors) {

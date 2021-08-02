@@ -24,7 +24,7 @@ module.exports = function( { MySQLDb }) {
         MySQLDb.query(query, values, function(error) {
             if (error) {
                 if (error.sqlMessage.includes("titleUnique")) {
-                    callback(['title Taken'])
+                    callback(['Title Taken'])
                 } else {
                     callback(['internalError'])
                 }

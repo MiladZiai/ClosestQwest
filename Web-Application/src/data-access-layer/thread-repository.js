@@ -13,9 +13,10 @@ module.exports = function({ MySQLDb }) {
     }
 
     exports.createThread = function(thread, callback) {
-        const query = `INSERT INTO thread (threadName) VALUES (?)`
+        const query = `INSERT INTO thread (threadName, threadOfAccount) VALUES (?, ?)`
+        const values = [thread.name, thread.threadOfAccount]
 
-        MySQLDb.query(query, thread.name, function(error) {
+        MySQLDb.query(query, values, function(error) {
             if (error) {
                 if (error.sqlMessage.includes("nameUnique")) {
                     callback(['thread exisists'])

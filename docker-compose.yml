@@ -1,15 +1,25 @@
 version: '3'
 services:
-  "web-application":
+  nginx:
+    image: nginx
+    depends_on: 
+     - web-application
+    volumes:
+      - ./single-page-application/frontend/:/etc/nginx/html
+    ports:
+      - 8000:80
+  web-application:
     build: "./web-application"
     ports:
-      - "3000:8080"
+      - "80:80"
       - "9229:9229"
     volumes:
       - "./web-application/src:/web-application/src"
     depends_on:
       - redis
       - database
+    environment:
+      - JWT_KEY=${JWT_KEY}
   database:
     build: ./database
     ports:

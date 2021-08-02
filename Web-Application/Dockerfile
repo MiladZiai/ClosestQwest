@@ -1,4 +1,4 @@
-FROM node:13.5.0
+FROM node:14.8.0
 
 EXPOSE 8080
 
@@ -10,5 +10,6 @@ RUN npm install -g nodemon
 RUN npm install
 
 COPY src src
+COPY config config
 
 CMD ["npm", "run", "start"]

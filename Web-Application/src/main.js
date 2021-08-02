@@ -10,9 +10,9 @@ container.register({
     variousRouter: awilix.asFunction(require('./presentation-layer/routers/various-router')),
 
     //presentation-layer-API
-    //accountRouterApi: awilix.asFunction(require('./presentation-layer-api/backend/routers/account-router-api')),
-    //clubRouterApi: awilix.asFunction(require('./presentation-layer-api/backend/routers/club-router-api')),
-    //postRouterApi: awilix.asFunction(require('./presentation-layer-api/backend/routers/post-router-api')),
+    accountRouterApi: awilix.asFunction(require('./presentation-layer-api/routers/account-router-api')),
+    threadRouterApi: awilix.asFunction(require('./presentation-layer-api/routers/thread-router-api')),
+    postRouterApi: awilix.asFunction(require('./presentation-layer-api/routers/post-router-api')),
 
     //business-logic-layer
     accountManager: awilix.asFunction(require('./business-logic-layer/account-manager')),
@@ -23,22 +23,21 @@ container.register({
     accountRepository: awilix.asFunction(require('./data-access-layer/account-repository')),
     threadRepository: awilix.asFunction(require('./data-access-layer/thread-repository')),
     postRepository: awilix.asFunction(require('./data-access-layer/post-repository')),
-
+    
     //data-access-layer-sequelize
-    /*
-    accountRepository: awilix.asFunction(require('./data-access-layer-sequelize/account-repository')),
+    /*accountRepository: awilix.asFunction(require('./data-access-layer-sequelize/account-repository')),
     threadRepository: awilix.asFunction(require('./data-access-layer-sequelize/thread-repository')),
     postRepository: awilix.asFunction(require('./data-access-layer-sequelize/post-repository')),*/
-
+    
     //MySQLDb
     MySQLDb: awilix.asValue(require('./data-access-layer/db')),
     
     //SQLiteDb
-    //SQLiteDb: awilix.asValue(require('./data-access-layer-sequelize/SQLiteDb')),
+    SQLiteDb: awilix.asValue(require('./data-access-layer-sequelize/SQLiteDb')),
 
     app: awilix.asFunction(require('./presentation-layer/app'))
 })
 
 const app = container.resolve("app")
 
-app.listen(8080)
+app.listen(80)
