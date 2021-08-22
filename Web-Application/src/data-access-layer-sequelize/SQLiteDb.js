@@ -9,9 +9,7 @@ const db = {};
 
 const main = async () => { 
     //Test the DB Connection 
-    console.log('start authen'); 
     await sequelize.authenticate();
-    console.log('end authen');
 
     db.sequelize = sequelize;
     db.Sequelize = Sequelize;

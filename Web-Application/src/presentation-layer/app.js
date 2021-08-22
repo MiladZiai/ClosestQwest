@@ -11,20 +11,18 @@ module.exports = function({ variousRouter,
                             threadRouter, 
                             postRouter, 
                             accountRouterApi, 
-                            threadRouterApi,
-                            postRouterApi
+                            threadRouterApi
                         }) {
 
     const app = express()
+
+    // Handle all static files
+    app.use(express.static(path.join(__dirname, "../../../Single-Page-Application")))
 
     // Setup express-handlebars.
     app.use(express.urlencoded({ extended: false }))
     app.use(express.json())
     app.set("views", path.join(__dirname, "views"))
-
-    // Handle all static files in folder "public".
-    app.use(express.static(path.join(__dirname, "/public")))
-    app.use(express.static(path.join(__dirname, "../../../Single-Page-Application/frontend")))
 
     app.use(function(request, response, next) {
         response.setHeader("Access-Control-Allow-Origin", "*")
@@ -54,7 +52,6 @@ module.exports = function({ variousRouter,
     app.use("/threads", threadRouter)
     app.use("/api/threads", threadRouterApi)
     app.use("/posts", postRouter)
-    app.use("/api/posts", postRouterApi)
 
     return app
 

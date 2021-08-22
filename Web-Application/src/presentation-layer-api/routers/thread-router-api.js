@@ -36,24 +36,58 @@ module.exports = function({ threadManager }) {
             } else {
                 response.status(400).json({
                     message: "Bad Request",
-                    name: request.body.name
+                    name: request.body.name,
+                    errors: errors
+                })
+            }
+        })
+    })
+    
+    router.put("/editThread", checkAuth, function(request, response) {
+        const newThreadName = request.body.newThreadName
+        const threadId = request.body.threadId
+
+        const thread = {
+            name: newThreadName,
+            threadId: threadId
+        }
+        
+        threadManager.editThreadById(thread, function(errors) {
+            if(errors.length == 0) {
+                response.status(204).end()
+            } else {
+                response.status(400).json({
+                    message: "Bad Request",
+                    threadId: request.body.threadId,
+                    errors: errors
                 })
             }
         })
     })
 
-    /*
-    router.put("/updateThread", checkAuth, function(request, response) {
+    router.delete("/delete", checkAuth, function(request, response) {
         const threadOfAccount = request.body.threadOfAccount
+        const threadId = request.body.threadId
 
-        
+        const thread = {
+            threadOfAccount: threadOfAccount,
+            threadId: threadId
+        }
+
+        threadManager.deleteThreadById(thread, function(errors) {
+            if(errors.length == 0) {
+                response.status(204).end()
+            } else {
+                response.status(400).json({
+                    message: "Bad Request",
+                    threadId: request.body.threadId,
+                    errors: errors
+                })
+            }
+        })
+
     })
     
-    router.delete("/delete", function(request, response) {
-        const threadOfAccount = request.body.threadOfAccount
-
-    })
-    */
 
     return router
 }

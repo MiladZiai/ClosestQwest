@@ -1,7 +1,5 @@
 FROM node:14.8.0
 
-EXPOSE 8080
-
 WORKDIR /web-application
 
 COPY package*.json ./

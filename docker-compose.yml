@@ -3,16 +3,15 @@ services:
   nginx:
     image: nginx
     depends_on: 
-     - web-application
+      - web-application
     volumes:
-      - ./single-page-application/frontend/:/etc/nginx/html
+      - ./Web-Application/src/presentation-layer-api/SPA/:/usr/share/nginx/html/
     ports:
       - 8000:80
   web-application:
     build: "./web-application"
     ports:
-      - "80:80"
-      - "9229:9229"
+      - 80:80
     volumes:
       - "./web-application/src:/web-application/src"
     depends_on:

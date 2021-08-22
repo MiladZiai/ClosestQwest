@@ -21,7 +21,10 @@ module.exports = function({ accountManager }) {
                     location: "/api/accounts/"
                 })
             } else {
-                response.status(400).json({ message: "Bad Request" })
+                response.status(400).json({ 
+                    message: "Bad Request",
+                    errors: errors
+                 })
             }
         })
 
@@ -33,6 +36,7 @@ module.exports = function({ accountManager }) {
             return
         } else {
             const account = {
+                grant_type: request.body.grant_type,
                 username: request.body.username,
                 password: request.body.password
             }
@@ -48,13 +52,15 @@ module.exports = function({ accountManager }) {
 
                     response.status(200).json({ 
                         message: "Auth successful",
-                        id_token: token
+                        access_token: token,
+                        id_token: accountCredentials
                     })
 
                 } else {
                     response.status(401).json({
                         message: 'Auth failed!',
-                        WWWAuthenticate: "OAuth2 realm=accounts"
+                        WWWAuthenticate: "OAuth2 realm=accounts",
+                        errors: errors
                     })
                 }
             })

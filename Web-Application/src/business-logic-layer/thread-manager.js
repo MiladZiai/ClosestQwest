@@ -21,5 +21,20 @@ module.exports = function({ threadRepository }) {
 
     }
 
+    exports.editThreadById = function(thread, callback) {
+
+        // Validate the thread.
+        const errors = threadValidator.getErrorsNewThread(thread)
+        if (0 < errors.length) {
+            callback(errors, null)
+            return
+        }
+        threadRepository.editThreadById(thread, callback)
+    }
+
+    exports.deleteThreadById = function(thread, callback) {
+        threadRepository.deleteThreadById(thread, callback)
+    }
+
     return exports
 }

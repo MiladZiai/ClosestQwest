@@ -12,7 +12,6 @@ container.register({
     //presentation-layer-API
     accountRouterApi: awilix.asFunction(require('./presentation-layer-api/routers/account-router-api')),
     threadRouterApi: awilix.asFunction(require('./presentation-layer-api/routers/thread-router-api')),
-    postRouterApi: awilix.asFunction(require('./presentation-layer-api/routers/post-router-api')),
 
     //business-logic-layer
     accountManager: awilix.asFunction(require('./business-logic-layer/account-manager')),

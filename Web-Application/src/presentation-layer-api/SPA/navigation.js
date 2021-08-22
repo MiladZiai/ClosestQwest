@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     showPage(location.pathname)
 
+    // By listening to the body we dont need to listen to every single new element
     document.body.addEventListener("click", function(event) {
 
         const clickedElement = event.target
@@ -40,23 +41,24 @@ function showPage(uri) {
         case "/about":
             newPageId = "about"
             break
-        case "/sign-up":
+        case "/contact":
+            newPageId = "contact"
+            break
+        case "/accounts":
+            newPageId = "accounts"
+            break
+        case "/accounts/sign-up":
             newPageId = "sign-up"
             break
-        case "/sign-in":
+        case "/accounts/sign-in":
             newPageId = "sign-in"
             break
-        case "/clubs":
+        case "/threads":
             newPageId = "threads"
             loadAllThreads()
             break
         default:
-
-            if (uri.startsWith("/posts/")) {
-                newPageId = "posts"
-                /*const threadName = uri.split("/")[2]
-                loadAllPosts(threadName)*/
-            } else if (uri.startsWith("/create-thread/")) {
+            if (uri.startsWith("/create-thread")) {
                 newPageId = "create-thread"
             } else if (uri.startsWith("/edit-thread/")) {
                 newPageId = "edit-thread"
@@ -65,20 +67,7 @@ function showPage(uri) {
             }
     }
 
-
-    if (localStorage.getItem("accessToken")) {
-        const signUpButton = document.getElementById("is-sign-up")
-        signUpButton.classList.remove("is-sign-up")
-        signUpButton.classList.add("is-logged-in")
-
-        const signInButton = document.getElementById("is-sign-in")
-        signInButton.classList.remove("is-sign-in")
-        signInButton.classList.add("is-logged-in")
-
-        const logoutButton = document.getElementById("is-logout")
-        logoutButton.classList.remove("is-logout")
-        logoutButton.classList.add("show-logout")
-    }
+    checkToken()
 
     errorSection.innerHTML = ""
     document.getElementById(newPageId).classList.add("current-page")
@@ -86,4 +75,20 @@ function showPage(uri) {
 
 function hideCurrentPage() {
     document.querySelector(".current-page").classList.remove("current-page")
+}
+
+function checkToken() {
+    if (localStorage.getItem("accessToken")) {
+        const signUpButton = document.getElementById("is-sign-up")
+        signUpButton.setAttribute("style", "display: none !important;")
+
+        const signInButton = document.getElementById("is-sign-in")
+        signInButton.setAttribute("style", "display: none !important;")
+
+        document.getElementById("createThreadButton").style.visibility = "visible"
+
+        const logoutButton = document.getElementById("is-logout")
+        logoutButton.classList.remove("is-logout")
+        logoutButton.classList.add("show-logout")
+    }
 }

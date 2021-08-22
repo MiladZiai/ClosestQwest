@@ -16,6 +16,28 @@ module.exports = function({ SQLiteDb }){
                         callback(['internalError'])
                     }
                 })
+        },
+
+        editThreadById: function(thread, callback) {
+            const threadId = thread.threadId
+            const threadName = thread.name
+            SQLiteDb.thread.findOne({ where: { threadId: threadId } })
+                .then(function(thread) {
+                    if(thread) {
+                        thread.update({ 
+                            threadName: threadName
+                        })
+                        .then(callback([]))
+                        .catch(error => callback(['internalError']))
+                    }
+                })
+        },
+
+        deleteThreadById: function(thread, callback) {
+            const threadId = thread.threadId
+            SQLiteDb.thread.destroy({ where: { threadId }, raw: true })
+                .then(callback([]))
+                .catch(error => callback(['internalError']))
         }
     }
 }

@@ -29,6 +29,31 @@ module.exports = function({ MySQLDb }) {
         })
     }
 
+    exports.editThreadById = function(thread, callback) {
+        const query = "UPDATE thread SET threadName = ? WHERE threadId = ?"
+        const values = [thread.name, thread.threadId]
+
+        MySQLDb.query(query, values, function(error) {
+            if(error) {
+                callback(['internalError'])
+            } else {
+                callback([])
+            }
+        })
+    }
+
+    exports.deleteThreadById = function(thread, callback) {
+        const query = "DELETE FROM thread WHERE threadId = ?"
+
+        MySQLDb.query(query, thread.threadId, function(error) {
+            if(error) {
+                callback(['internalError'])
+            } else {
+                callback([])
+            }
+        })
+    }
+
     return exports
 
 }
